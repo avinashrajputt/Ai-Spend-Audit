@@ -1,6 +1,8 @@
 import type { AuditInput, AuditResult } from "../audit/types";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+const apiBaseUrl =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.MODE === "production" ? "https://ai-spend-audit-puce.vercel.app" : "");
 const buildUrl = (path: string) => `${apiBaseUrl}${path}`;
 
 export const requestSummary = async (auditInput: AuditInput, auditResult: AuditResult) => {

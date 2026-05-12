@@ -32,6 +32,7 @@ app.use(
   })
 );
 
+app.get("/", (_req, res) => res.json({ ok: true, service: "ai-spend-audit-api" }));
 app.get("/health", (_req, res) => res.json({ ok: true }));
 app.get("/share/:publicId", async (req, res) => {
   const audit = await Audit.findOne({ publicId: req.params.publicId }).lean();

@@ -1,7 +1,10 @@
 import type { AuditInput, AuditResult } from "../audit/types";
 
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+const buildUrl = (path: string) => `${apiBaseUrl}${path}`;
+
 export const requestSummary = async (auditInput: AuditInput, auditResult: AuditResult) => {
-  const response = await fetch("/api/summary", {
+  const response = await fetch(buildUrl("/api/summary"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ auditInput, auditResult })
@@ -19,7 +22,7 @@ export const createAudit = async (
   auditResult: AuditResult,
   summary: string
 ) => {
-  const response = await fetch("/api/audits", {
+  const response = await fetch(buildUrl("/api/audits"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ auditInput, auditResult, summary })
@@ -40,7 +43,7 @@ export const createLead = async (payload: {
   auditPublicId?: string;
   honeypot?: string;
 }) => {
-  const response = await fetch("/api/leads", {
+  const response = await fetch(buildUrl("/api/leads"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -54,7 +57,7 @@ export const createLead = async (payload: {
 };
 
 export const fetchPublicAudit = async (publicId: string) => {
-  const response = await fetch(`/api/audits/${publicId}`);
+  const response = await fetch(buildUrl(`/api/audits/${publicId}`));
   if (!response.ok) {
     throw new Error("audit_not_found");
   }

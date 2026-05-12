@@ -4,8 +4,8 @@ import { z } from "zod";
 const router = Router();
 
 const summarySchema = z.object({
-  auditInput: z.record(z.unknown()),
-  auditResult: z.record(z.unknown())
+  auditInput: z.record(z.string(), z.unknown()),
+  auditResult: z.record(z.string(), z.unknown())
 });
 
 const buildFallbackSummary = (auditResult: Record<string, unknown>) => {

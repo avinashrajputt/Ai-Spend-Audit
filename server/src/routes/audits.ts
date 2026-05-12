@@ -6,8 +6,8 @@ import { Audit } from "../models/Audit.js";
 const router = Router();
 
 const auditPayloadSchema = z.object({
-  auditInput: z.record(z.unknown()),
-  auditResult: z.record(z.unknown()),
+  auditInput: z.record(z.string(), z.unknown()),
+  auditResult: z.record(z.string(), z.unknown()),
   summary: z.string().min(1).max(1200)
 });
 

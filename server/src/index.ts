@@ -17,11 +17,14 @@ const clientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:5173";
 const appBaseUrl = process.env.APP_BASE_URL || "http://localhost:5173";
 const shareBaseUrl = process.env.SHARE_BASE_URL || appBaseUrl;
 
-app.use(helmet());
+const helmetMiddleware = helmet as unknown as (...args: any[]) => any;
+const rateLimitMiddleware = rateLimit as unknown as (...args: any[]) => any;
+
+app.use(helmetMiddleware());
 app.use(cors({ origin: clientOrigin }));
 app.use(express.json({ limit: "1mb" }));
 app.use(
-  rateLimit({
+  rateLimitMiddleware({
     windowMs: 60_000,
     max: 60,
     standardHeaders: true,
